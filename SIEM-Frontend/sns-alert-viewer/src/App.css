@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e6f0fa, #fafdff);
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+.panel {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+}
+
+.alert-list {
+  width: 30%;
+}
+
+.alert-detail {
+  width: 70%;
+}
+
+.alert-item {
+  cursor: pointer;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.alert-item:hover {
+  background-color: #f0f4f8;
+}
+
+.alert-item-selected {
+  background-color: #e0f2ff;
+}
+
+.alert-title {
+  font-weight: bold;
+  color: #1f2937;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.alert-timestamp {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.header-bar {
+  background-color: #111827;
+  color: white;
+  padding: 12px 24px;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #0ea5e9;
+}
+
+.alert-heading {
+  margin-bottom: 16px;
+}
+
+.sort-label {
+  font-size: 14px;
+  margin-right: 8px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.sort-dropdown {
+  margin-bottom: 16px;
+}
+
+select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e0;
+  font-size: 0.9rem;
+  background-color: #f9fafb;
+  color: #1f2937;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  appearance: none;
+}
+
+.severity-text {
+  font-size: 0.85rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.summary-bar {
+  background-color: #e0f2fe;
+  padding: 10px 24px;
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #bae6fd;
+}
