@@ -5,10 +5,14 @@ import AlertList from './components/AlertList';
 import AlertDetail from './components/AlertDetail';
 
 function App() {
+  // State to hold all incoming alerts
   const [alerts, setAlerts] = useState([]);
+  // State to track the currently selected alert for detail view
   const [selectedAlert, setSelectedAlert] = useState(null);
+  // State to handle sort order of the alerts list
   const [sortOrder, setSortOrder] = useState('time-desc');
 
+  // Load alerts from localStorage on first render
   useEffect(() => {
     const saved = localStorage.getItem('alerts');
     if (saved) {
@@ -16,28 +20,34 @@ function App() {
     }
   }, []);
 
+  // Save alerts to localStorage whenever alerts state changes
   useEffect(() => {
     localStorage.setItem('alerts', JSON.stringify(alerts));
   }, [alerts]);
 
+  // Establish WebSocket connection to backend server on mount
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:4000');
 
+    // Handle incoming messages (SNS alert broadcast from backend)
     socket.onmessage = (event) => {
-      const alert = JSON.parse(event.data);
-      setAlerts(prev => [alert, ...prev]);
+      const alert = JSON.parse(event.data);// Parse JSON alert
+      setAlerts(prev => [alert, ...prev]); // Prepend to alerts array
     };
 
     socket.onerror = (err) => console.error('WebSocket error:', err);
 
+    // Cleanup WebSocket connection on unmount
     return () => socket.close();
   }, []);
 
+  // Helper to extract numeric severity score from message content
   const getSeverityScore = (message) => {
     const match = message?.match(/Severity Score:\s*(\d+)/);
     return match ? parseFloat(match[1]) : 0;
   };
 
+  // Sort alerts based on selected sort order
   const sortedAlerts = [...alerts].sort((a, b) => {
     if (sortOrder.startsWith('severity')) {
       const aScore = getSeverityScore(a.Message);
@@ -54,6 +64,7 @@ function App() {
     return 0;
   });
 
+  // Count number of alerts in each severity bucket
   const severityBuckets = alerts.reduce((acc, alert) => {
     const score = getSeverityScore(alert.Message);
     if (score >= 8) acc.high++;
@@ -64,6 +75,7 @@ function App() {
   
   const { high, medium, low } = severityBuckets;
 
+  // Render dashboard layout
   return (
     <>
       <div className="header-bar">🔐 SIEM Dashboard </div>
@@ -89,9 +101,6 @@ function App() {
       </div>
     </>
   );
-
-
-
 }
 
 export default App;
